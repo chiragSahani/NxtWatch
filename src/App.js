@@ -1,7 +1,5 @@
 import {Component} from 'react'
 import {Route, Switch, Redirect} from 'react-router-dom'
-// eslint-disable-next-line no-unused-vars
-import Cookies from 'js-cookie'
 import NxtWatchContext from './context/NxtWatchContext'
 import Login from './components/Login'
 import Home from './components/Home'
@@ -145,7 +143,7 @@ class App extends Component {
             />
             <ProtectedRoute exact path="/videos/:id" component={Video} />
             <Route exact path="/not-found" component={NotFound} />
-            <Redirect to="/login" />
+            <Redirect to="/not-found" />
           </Switch>
         </NxtWatchContext.Provider>
       </>

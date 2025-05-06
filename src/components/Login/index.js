@@ -1,215 +1,132 @@
 import {Component} from 'react'
-import {Redirect} from 'react-router-dom'
 import Cookies from 'js-cookie'
-import axios from 'axios'
-import NxtWatchContext from '../../context/NxtWatchContext'
+import {Redirect} from 'react-router-dom'
+
 import {
-  LoginPageContainer,
-  LoginFormContainer,
-  NxtWatchImage,
-  UsernameInputFieldContainer,
-  LabelElement,
-  UsernameInputElement,
-  ShowPasswordCheckbox,
-  ShowPasswordContainer,
-  ShowPasswordLabel,
+  AppContainer,
+  FormContainer,
+  LoginLogo,
+  InputContainer,
   LoginButton,
-  PrefillMsg,
-  ErrorMSg,
+  SubmitError,
+  InputLabel,
+  UserInput,
+  CheckboxContainer,
+  Checkbox,
+  ShowPassword,
 } from './styledComponents'
 
 class Login extends Component {
   state = {
-    username: 'rahul',
-    password: 'rahul@2021',
+    username: '',
+    password: '',
     showPassword: false,
+    showSubmitError: false,
     errorMsg: '',
   }
 
-  getUsername = event => {
-    this.setState({username: event.target.value})
+  onChangeHandler = event => {
+    this.setState({[event.target.name]: event.target.value})
   }
 
-  getPassword = event => {
-    this.setState({password: event.target.value})
-  }
-
-  verifyInputFields = (username, password) => {
-    // Implementing Regular Expressions to validate input fields
-    const isUsernameValid = /^[\w_.@$#]{4,}$/.test(username.trim())
-    const isPwdValid = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+={}[\]'":;<>,.?~\-|\\]).{8,}$/.test(
-      password.trim(),
-    )
-
-    if (!isUsernameValid) return 'Invalid username'
-    if (!isPwdValid) return 'Invalid password'
-    return 'valid'
-  }
-
-  authenticateUser = async () => {
-    const {username, password} = this.state
-    const userDetailsObject = {
-      username,
-      password,
-    }
-    const url = 'https://apis.ccbp.in/login'
-    const body = JSON.stringify(userDetailsObject)
-
-    try {
-      //   Data Posting through axios
-      const response = await axios.post(url, body)
-      const {data} = response
-      const jwtToken = data.jwt_token
-
-      //   Setting Up Cookies
-      Cookies.set('jwt_token', jwtToken, {expires: 30})
-
-      const {history} = this.props
-      //   Directing user to Home page
-      history.replace('/')
-    } catch (error) {
-      const errorMsg = error?.response?.data?.error_msg
-      console.log(errorMsg)
-      this.setState({errorMsg})
-    }
-  }
-
-  onFormSubmit = event => {
-    event.preventDefault()
-
-    const {username, password} = this.state
-    // verifying input fields
-    const validity = this.verifyInputFields(username, password)
-    switch (validity) {
-      case 'Invalid username':
-        this.setState({
-          errorMsg: 'Please enter a valid username',
-        })
-        return
-
-      case 'Invalid password':
-        this.setState({
-          errorMsg: 'Please enter a valid password',
-        })
-        return
-
-      default:
-        break
-    }
-
-    // Proceeding to authentication
-    this.authenticateUser()
-  }
-
-  toggleShowPassword = () => {
+  OnShowPassword = () => {
     this.setState(prevState => ({showPassword: !prevState.showPassword}))
   }
 
-  renderUsernameInputField = () => {
+  onSubmitSuccess = jwtToken => {
+    const {history} = this.props
+
+    Cookies.set('jwt_token', jwtToken, {
+      expires: 30,
+      path: '/',
+    })
+    history.replace('/')
+  }
+
+  onSubmitFailure = errorMsg => {
+    this.setState({showSubmitError: true, errorMsg})
+  }
+
+  submitForm = async event => {
+    event.preventDefault()
+    const {username, password} = this.state
+    const userDetails = {username, password}
+    const url = 'https://apis.ccbp.in/login'
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(userDetails),
+    }
+    const response = await fetch(url, options)
+    const data = await response.json()
+    if (response.ok === true) {
+      this.onSubmitSuccess(data.jwt_token)
+    } else {
+      this.onSubmitFailure(data.error_msg)
+    }
+  }
+
+  renderUsernameField = () => {
     const {username} = this.state
-
     return (
-      <NxtWatchContext.Consumer>
-        {value => {
-          const {isLightTheme} = value
-
-          return (
-            <UsernameInputFieldContainer theme={isLightTheme}>
-              <LabelElement theme={isLightTheme} htmlFor="username">
-                USERNAME
-              </LabelElement>
-              <UsernameInputElement
-                type="text"
-                id="username"
-                placeholder="Username"
-                value={username}
-                onChange={this.getUsername}
-                theme={isLightTheme}
-                autoComplete="true"
-              />
-            </UsernameInputFieldContainer>
-          )
-        }}
-      </NxtWatchContext.Consumer>
+      <>
+        <InputLabel htmlFor="username">USERNAME</InputLabel>
+        <UserInput
+          type="text"
+          id="username"
+          value={username}
+          name="username"
+          onChange={this.onChangeHandler}
+          placeholder="Username"
+        />
+      </>
     )
   }
 
-  renderPasswordInputField = () => {
+  renderPasswordField = () => {
     const {password, showPassword} = this.state
     const inputType = showPassword ? 'text' : 'password'
     return (
-      <NxtWatchContext.Consumer>
-        {value => {
-          const {isLightTheme} = value
-          return (
-            <UsernameInputFieldContainer theme={isLightTheme}>
-              <LabelElement theme={isLightTheme} htmlFor="password">
-                PASSWORD
-              </LabelElement>
-              <UsernameInputElement
-                type={inputType}
-                id="password"
-                placeholder="Password"
-                value={password}
-                onChange={this.getPassword}
-                theme={isLightTheme}
-                autoComplete="true"
-              />
-              <ShowPasswordContainer>
-                <ShowPasswordCheckbox
-                  type="checkbox"
-                  id="pwdCheckbox"
-                  onChange={this.toggleShowPassword}
-                />
-                <ShowPasswordLabel htmlFor="pwdCheckbox" theme={isLightTheme}>
-                  Show Password
-                </ShowPasswordLabel>
-              </ShowPasswordContainer>
-            </UsernameInputFieldContainer>
-          )
-        }}
-      </NxtWatchContext.Consumer>
+      <>
+        <InputLabel htmlFor="password">PASSWORD</InputLabel>
+        <UserInput
+          type={inputType}
+          id="password"
+          value={password}
+          name="password"
+          onChange={this.onChangeHandler}
+          placeholder="Password"
+        />
+        <CheckboxContainer>
+          <Checkbox
+            type="checkbox"
+            id="checkbox"
+            onChange={this.OnShowPassword}
+          />
+          <ShowPassword htmlFor="checkbox">Show Password</ShowPassword>
+        </CheckboxContainer>
+      </>
     )
   }
 
   render() {
-    const {errorMsg} = this.state
+    const {showSubmitError, errorMsg} = this.state
     const jwtToken = Cookies.get('jwt_token')
     if (jwtToken !== undefined) {
       return <Redirect to="/" />
     }
     return (
-      <NxtWatchContext.Consumer>
-        {value => {
-          const {isLightTheme} = value
-          return (
-            <LoginPageContainer theme={isLightTheme}>
-              <LoginFormContainer
-                onSubmit={this.onFormSubmit}
-                theme={isLightTheme}
-              >
-                <NxtWatchImage
-                  src={
-                    isLightTheme
-                      ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
-                      : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
-                  }
-                  alt="website logo"
-                />
-                {this.renderUsernameInputField()}
-                {this.renderPasswordInputField()}
-                <LoginButton type="submit" theme={isLightTheme}>
-                  Login
-                </LoginButton>
-                <PrefillMsg>
-                  Login and explore with pre-filled credentials
-                </PrefillMsg>
-                {errorMsg && <ErrorMSg>*{errorMsg}</ErrorMSg>}
-              </LoginFormContainer>
-            </LoginPageContainer>
-          )
-        }}
-      </NxtWatchContext.Consumer>
+      <AppContainer>
+        <FormContainer onSubmit={this.submitForm}>
+          <LoginLogo
+            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+            alt="website logo"
+          />
+          <InputContainer>{this.renderUsernameField()}</InputContainer>
+          <InputContainer>{this.renderPasswordField()}</InputContainer>
+          <LoginButton type="submit">Login</LoginButton>
+          {showSubmitError && <SubmitError>*{errorMsg}</SubmitError>}
+        </FormContainer>
+      </AppContainer>
     )
   }
 }

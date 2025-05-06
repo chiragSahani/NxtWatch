@@ -1,119 +1,80 @@
 import styled from 'styled-components'
 
-export const LoginPageContainer = styled.div`
-  height: 100vh;
-  padding: 50px 10px 40px 10px;
-
-  background-color: ${props => (props.theme === true ? '#ffffff' : '#231f20')};
-
+export const AppContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
 `
-
-export const LoginFormContainer = styled.form`
-  width: 90%;
-  max-width: 380px;
+export const FormContainer = styled.form`
+  display: flex;
+  flex-direction: column;
   padding: 30px;
-  border: none;
-  border-radius: 6px;
-  box-shadow: 2px 2px 6px 6px
-    ${props => (props.theme === true ? '#f4f4f4' : ' #181818')};
-
-  background-color: ${props => (props.theme === true ? '#ffffff' : '#000000')};
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 350px;
 `
 
-export const NxtWatchImage = styled.img`
-  height: 40px;
-  width: 160px;
-  margin-bottom: 28px;
-
+export const LoginLogo = styled.img`
+  width: 180px;
   align-self: center;
+  margin-bottom: 15px;
 `
-export const UsernameInputFieldContainer = styled.div`
+
+export const InputContainer = styled.div`
   width: 100%;
-  margin-bottom: 20px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  background-color: transparent;
-`
-
-export const LabelElement = styled.label`
-  margin-bottom: 4px;
-
-  font-family: 'Roboto';
-  font-size: 12px;
-  font-weight: 600;
-
-  color: ${props => (props.theme === true ? '#616e7c' : '#ffffff')};
-`
-
-export const UsernameInputElement = styled.input`
-  width: 100%;
-  height: 36px;
-  padding: 6px;
-  border: 1px solid ${props => (props.theme === true ? '#ebebeb' : '#475569')};
-  border-radius: 4px;
-  outline: none;
-
-  font-family: 'Roboto';
-  font-size: 15px;
-  font-weight: 400;
-
-  color: ${props => (props.theme === true ? '#616e7c' : '#ffffff')};
-  background-color: transparent;
-`
-export const ShowPasswordContainer = styled.div`
-  margin-top: 6px;
-
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`
-export const ShowPasswordCheckbox = styled.input`
-  height: 16px;
-  width: 16px;
-  margin-right: 8px;
-  cursor: pointer;
-`
-export const ShowPasswordLabel = styled.label`
-  font-family: 'Roboto';
-  font-size: 13px;
-  font-weight: 400;
-
-  color: ${props => (props.theme === true ? '#0f0f0f' : '#ffffff')};
+  margin-top: 15px;
 `
 
 export const LoginButton = styled.button`
   width: 100%;
-  height: 40px;
+  background-color: #4f46e5;
   border: none;
-  border-radius: 6px;
-
+  border-radius: 5px;
   font-family: 'Roboto';
-  font-size: 14px;
-  font-weight: 500;
-
+  font-size: 15px;
+  height: 30px;
   color: #ffffff;
-  background-color: #3b82f6;
+  margin-top: 20px;
 `
-export const ErrorMSg = styled.p`
+
+export const SubmitError = styled.p`
   font-family: 'Roboto';
-  font-size: 13px;
-  font-weight: 400;
-
-  color: #ff0000;
+  font-size: 12px;
+  color: #ff0b37;
 `
 
-export const PrefillMsg = styled(ErrorMSg)`
-  font-size: 13px;
-
+export const InputLabel = styled.label`
+  font-family: 'Roboto';
+  font-size: 12px;
   color: #475569;
+  font-weight: 500;
+`
+
+export const UserInput = styled.input`
+  font-family: 'Roboto';
+  font-size: 15px;
+  color: #475569;
+  outline: none;
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #94a3b8;
+  border-radius: 4px;
+  margin-top: 5px;
+`
+export const CheckboxContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 12px;
+`
+export const Checkbox = styled.input`
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+`
+export const ShowPassword = styled.label`
+  font-family: 'Roboto';
+  font-size: 15px;
+  color: #1e293b;
 `

@@ -22,7 +22,7 @@
     }
   ],
   "rules": {
-    "prettier/prettier": 0,
+    "prettier/prettier": "error",
     "react/jsx-filename-extension": [1, {"extensions": [".js", ".jsx"]}],
     "react/state-in-constructor": "off",
     "react/react-in-jsx-scope": "off",
@@ -35,7 +35,6 @@
         "labelAttributes": ["htmlFor"]
       }
     ],
-    "jsx-a11y/control-has-associated-label": 0,
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/no-noninteractive-element-interactions": [
       "off",
@@ -56,23 +55,6 @@
     "react/no-unescaped-entities": "warn",
     "react/jsx-props-no-spreading": "off",
     "operator-assignment": ["warn", "always"],
-    "radix": "off",
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "js": "never",
-        "jsx": "never",
-        "ts": "never",
-        "tsx": "never"
-      }
-    ]
-  },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
-    }
+    "radix": "off"
   }
 }

@@ -243,51 +243,51 @@ export const StatType = styled.button`
 
 export const LikeButton = styled(StatButton)`
   color: ${props => {
-        if (props.reaction === true) {
-            return ' #2563eb'
-        }
-        return '#64748b'
-    }};
+    if (props.reaction === true) {
+      return ' #2563eb'
+    }
+    return '#64748b'
+  }};
 `
 export const LikeText = styled(StatType)`
   color: ${props => {
-        if (props.reaction === true) {
-            return ' #2563eb'
-        }
-        return '#64748b'
-    }};
+    if (props.reaction === true) {
+      return ' #2563eb'
+    }
+    return '#64748b'
+  }};
 `
 
 export const DislikeButton = styled(StatButton)`
   color: ${props => {
-        if (props.reaction === true) {
-            return ' #2563eb'
-        }
-        return '#64748b'
-    }};
+    if (props.reaction === true) {
+      return ' #2563eb'
+    }
+    return '#64748b'
+  }};
 `
 export const DislikeText = styled(StatType)`
   color: ${props => {
-        if (props.reaction === true) {
-            return ' #2563eb'
-        }
-        return '#64748b'
-    }};
+    if (props.reaction === true) {
+      return ' #2563eb'
+    }
+    return '#64748b'
+  }};
 `
 
 export const SaveButton = styled(StatButton)`
   color: ${props => {
-        if (props.saved === true) {
-            return ' #2563eb'
-        }
-        return '#64748b'
-    }};
+    if (props.saved === true) {
+      return ' #2563eb'
+    }
+    return '#64748b'
+  }};
 `
 export const SaveText = styled(StatType)`
   color: ${props => {
-        if (props.saved === true) {
-            return ' #2563eb'
-        }
-        return '#64748b'
-    }};
+    if (props.saved === true) {
+      return ' #2563eb'
+    }
+    return '#64748b'
+  }};
 `
