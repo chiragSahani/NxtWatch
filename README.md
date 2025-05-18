@@ -37,11 +37,10 @@ Welcome to **Nxt Watch**, a modern video streaming platform inspired by YouTube!
 ### 🛠️ **Tech Stack**
 
 * **Frontend:** ReactJS, TailwindCSS, Shadcn/UI
-* **Backend:** Node.js, Express, MongoDB
 * **Authentication:** JWT for secure login
 * **API Integration:** RESTful APIs
-* **State Management:** Redux
-* **Deployment:** Vercel / Netlify
+* **State Management:** Context
+
 
 ---
 
@@ -51,9 +50,7 @@ Welcome to **Nxt Watch**, a modern video streaming platform inspired by YouTube!
 NxtWatch  
 ├── src  
 │   ├── components        # Reusable UI components  
-│   ├── pages             # Main application pages  
-│   ├── utils             # Helper functions  
-│   └── assets            # Images and media  
+│   ├── Context           # State Management (Light and Dark Theme) 
 ├── public                # Static files  
 └── README.md             # Documentation  
 ```
